@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
+
+//Task 2: 1. Add mappedSuperClass 2. id, generated values 3. Can't be blank, size
 @MappedSuperclass
 public abstract class AbstractEntity {
     @Id

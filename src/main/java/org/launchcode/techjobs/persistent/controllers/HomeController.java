@@ -48,10 +48,9 @@ public class HomeController {
     }
 
     @PostMapping("add")
-    public String processAddJobForm(@ModelAttribute @Valid Job newJob,
-                                    Errors errors, Model model, @RequestParam int employerId,
+    public String processAddJobForm(@ModelAttribute @Valid Job newJob, Errors errors, Model model, @RequestParam int employerId,
                                     // Task 4. Home controller 2.
-                                    @RequestParam List<Integer> skills) {
+                                    @RequestParam(required = false) List<Integer> skills) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
@@ -62,16 +61,22 @@ public class HomeController {
         if (optionalEmployer.isPresent()) {
             Employer employer = optionalEmployer.get();
             newJob.setEmployer(employer);
+
         }
         //Task 4 Home contoller 3. Skills data
-        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+        if (skills != null) {
+            List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         newJob.setSkills(skillObjs);
+        }
         jobRepository.save(newJob);
         return "redirect:";
+        // only run if skills not null
+
 
     }
 
     @GetMapping("view/{jobId}")
+    //Task 4: Added for Job to display
     public String displayViewJob(Model model, @PathVariable int jobId) {
         Optional<Job> optionalJob = jobRepository.findById(jobId);
         if (optionalJob.isPresent()) {

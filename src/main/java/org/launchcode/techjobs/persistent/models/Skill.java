@@ -7,11 +7,15 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+//Task 2: 4. add entity
 @Entity
 public class Skill extends AbstractEntity {
+    //Task 2: 3. Longer Description
 @NotBlank
+@Size(max = 255)
     private String description;
 
+//Task 4
     @ManyToMany(mappedBy = "skills")
     private List<Job> jobs =new ArrayList<>();
 
@@ -22,6 +26,7 @@ public class Skill extends AbstractEntity {
 //    public void setDescription(String description) {
 //        this.description = description;
 //    }
+   //no arg constructor
     public Skill() {
     }
 
